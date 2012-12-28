@@ -1,0 +1,5 @@
+fixtures:
+  repositories:
+    vcsrepo: git://github.com/puppetlabs/puppetlabs-vcsrepo.git
+  symlinks:
+    tasseo: "#{source_dir}"

@@ -1,0 +1,20 @@
+description "start and stop tasseo"
+author "Gareth Rushgrove"
+
+start on virtual-filesystems
+stop on runlevel [06]
+
+respawn
+respawn limit 5 30
+
+env GRAPHITE_URL=<%= graphite_url %>
+env PORT=<%= port %>
+
+chdir /opt/tasseo
+setuid www-data
+setgid www-data
+
+console log
+script
+exec bundle exec rackup -p $PORT
+end script

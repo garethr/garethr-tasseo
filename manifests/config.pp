@@ -1,0 +1,2 @@
+class tasseo::config {
+}
