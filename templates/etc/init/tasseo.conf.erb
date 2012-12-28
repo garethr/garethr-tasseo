@@ -10,6 +10,8 @@ respawn limit 5 30
 env GRAPHITE_URL=<%= graphite_url %>
 env PORT=<%= port %>
 
+<% if graphite_auth %>env GRAPHITE_AUTH=<%= graphite_auth %><% end %>
+
 chdir /opt/tasseo
 setuid www-data
 setgid www-data

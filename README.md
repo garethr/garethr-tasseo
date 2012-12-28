@@ -24,3 +24,10 @@ It's very likely you'll want to override at least the URL where graphite can be 
       port         => 5001,
       graphite_url => 'http://graphite.example.com',
     }
+
+If your Graphite instance has basic auth then you can also pass the
+username and password details:
+
+    class { 'tasseo':
+      graphite_auth => 'username:password',
+    }
