@@ -1,5 +1,5 @@
 class tasseo::install {
-  vcsrepo { "/opt/tasseo":
+  vcsrepo { '/opt/tasseo':
     ensure   => present,
     provider => git,
     source   => 'git://github.com/obfuscurity/tasseo.git',
