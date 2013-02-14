@@ -7,7 +7,7 @@ class tasseo::install {
   }
 
   exec { 'bundle_tasseo':
-    command => 'bundle install --path vendor',
+    command => '/usr/bin/bundle install --path vendor',
     cwd     => '/opt/tasseo',
     creates => '/opt/tasseo/vendor',
   }
