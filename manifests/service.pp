@@ -8,11 +8,6 @@ class tasseo::service {
     target => '/lib/init/upstart-job',
   }
 
-  file { '/etc/init/tasseo.conf':
-    ensure  => present,
-    content => template('tasseo/etc/init/tasseo.conf.erb'),
-  }
-
   service { 'tasseo':
     ensure     => running,
     enable     => true,
