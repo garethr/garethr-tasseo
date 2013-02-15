@@ -1,7 +1,4 @@
 class tasseo::service {
-  $graphite_url = $tasseo::graphite_url
-  $graphite_auth = $tasseo::graphite_auth
-  $port = $tasseo::port
 
   service { 'tasseo':
     ensure     => running,
