@@ -1,7 +1,7 @@
-class tasseo(
+class tasseo (
   $graphite_url = 'http://localhost:8081',
   $graphite_auth = false,
-  $port = 5000,
+  $port = 5000
 ){
   class{'tasseo::install': } ->
   class{'tasseo::config': } ~>
