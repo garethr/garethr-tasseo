@@ -1,0 +1,3 @@
+GRAPHITE_URL=<%= scope.lookupvar('tasseo::graphite_url') %>
+PORT=<%= scope.lookupvar('tasseo::port') %>
+<% if scope.lookupvar('tasseo::graphite_auth') %>GRAPHITE_AUTH=<%= scope.lookupvar('tasseo::graphite_auth') %><% end %>
