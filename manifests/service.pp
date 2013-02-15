@@ -13,10 +13,7 @@ class tasseo::service {
     enable     => true,
     hasstatus  => true,
     hasrestart => true,
-    require    => [
-      File['/etc/init.d/tasseo'],
-      File['/etc/init/tasseo.conf'],
-    ],
     provider   => $tasseo::params::service_provider,
+    require    => [$tasseo::params::service_require, Class['tasseo::config']]
   }
 }
