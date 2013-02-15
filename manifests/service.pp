@@ -3,11 +3,6 @@ class tasseo::service {
   $graphite_auth = $tasseo::graphite_auth
   $port = $tasseo::port
 
-  file { '/etc/init.d/tasseo':
-    ensure => link,
-    target => '/lib/init/upstart-job',
-  }
-
   service { 'tasseo':
     ensure     => running,
     enable     => true,
