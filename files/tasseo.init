@@ -1,0 +1,107 @@
+#!/bin/sh
+#
+# tasseo          live dashboard for graphite
+#
+# chkconfig: 345 95 5
+# description: 		live dashboard for graphite
+#
+ 
+### BEGIN INIT INFO
+# Provides:          NAME
+# Required-Start:    $network
+# Required-Stop:     $network
+# Description:       live dashboard for graphite
+# Short-Description: live dashboard for graphite
+### END INIT INFO
+
+[ -f /etc/sysconfig/tasseo ] &&  . /etc/sysconfig/tasseo
+
+PATH=/sbin:/usr/sbin:/bin:/usr/bin
+NAME=tasseo
+
+DESC=tasseo
+DIR=/opt/tasseo 
+LOCK_FILE=/var/lock/subsys/$NAME
+PID_FILE=/var/run/$NAME.pid
+CONTROL="bundle exec thin -R config.ru -p $PORT -d -P $PID_FILE"
+
+RETVAL=0
+set -e
+ 
+start () {
+    set +e
+	cd $DIR
+    OUTPUT=$($CONTROL start) 
+    echo $OUTPUT | grep -q 'ERROR' 
+    STARTSTATUS=$?
+    set -e
+    case "$STARTSTATUS" in
+        1)
+            echo SUCCESS
+            if [ -n "$LOCK_FILE" ] ; then
+                touch $LOCK_FILE
+            fi
+            RETVAL=0
+            ;;
+        *)
+            echo FAILED
+            echo $OUTPUT
+            RETVAL=1
+            ;;
+    esac
+}
+ 
+stop () {
+        set +e
+		cd $DIR
+	    OUTPUT=$($CONTROL stop) 
+        RETVAL=$?
+        set -e
+        if [ $RETVAL = 0 ] ; then
+            echo SUCCESS
+            if [ -n "$LOCK_FILE" ] ; then
+                rm -f $LOCK_FILE
+            fi
+        else
+            echo FAILED
+        fi
+}
+ 
+status() {
+    set +e
+    OUTPUT=$(kill -0 `cat $PID_FILE`)
+	RETVAL=$?
+    if [ $RETVAL = 0 ] ; then
+        echo "$NAME running"
+    fi
+    set -e
+}
+ 
+restart() {
+    stop
+    start
+}
+ 
+case "$1" in
+    start)
+        echo -n "Starting $DESC: "
+        start
+        ;;
+    stop)
+        echo -n "Stopping $DESC: "
+        stop
+        ;;
+    restart)
+        echo -n "Restarting $DESC: "
+        restart
+        ;;
+    status)
+        status
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|status|restart}" >&2
+        RETVAL=1
+        ;;
+esac
+ 
+exit $RETVAL

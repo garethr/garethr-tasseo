@@ -7,10 +7,10 @@ stop on runlevel [06]
 respawn
 respawn limit 5 30
 
-env GRAPHITE_URL=<%= graphite_url %>
-env PORT=<%= port %>
+env GRAPHITE_URL=<%= scope.lookupvar('tasseo::graphite_url') %>
+env PORT=<%= scope.lookupvar('tasseo::port') %>
 
-<% if graphite_auth %>env GRAPHITE_AUTH=<%= graphite_auth %><% end %>
+<% if scope.lookupvar('tasseo::graphite_auth') %>env GRAPHITE_AUTH=<%= scope.lookupvar('tasseo::graphite_auth') %><% end %>
 
 chdir /opt/tasseo
 setuid www-data
